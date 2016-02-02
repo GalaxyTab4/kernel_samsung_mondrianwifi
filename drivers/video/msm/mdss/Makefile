@@ -20,6 +20,11 @@ endif
 dsi-v2-objs = dsi_v2.o dsi_host_v2.o dsi_io_v2.o
 obj-$(CONFIG_FB_MSM_MDSS_MDP3) += dsi-v2.o
 
+else
+ifeq ($(CONFIG_FB_MSM_MDSS_TC_DSI2LVDS_WXGA_PANEL),y)
+mdss-dsi-objs +=logo.o mdss_tc358764_dsi2lvds.o LP8556-backlight.o mdss_msm_gpio_pwm.o
+else
+
 mdss-dsi-objs := mdss_dsi.o mdss_dsi_host.o mdss_dsi_cmd.o mdss_dsi_status.o
 mdss-dsi-objs += mdss_dsi_panel.o
 mdss-dsi-objs += msm_mdss_io_8974.o

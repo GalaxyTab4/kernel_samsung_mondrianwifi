@@ -439,7 +439,7 @@ out:
  * Write out information from cpufreq_driver->policy[cpu]; object must be
  * "unsigned int".
  */
-
+#ifdef FUCKER
 #define show_one(file_name, object)			\
 static ssize_t show_##file_name				\
 (struct cpufreq_policy *policy, char *buf)		\
@@ -457,13 +457,14 @@ show_one(cpu_utilization, util);
 #ifdef CONFIG_SEC_PM
 show_one(cpu_load, load_at_max);
 #endif
-
+#endif
 static int __cpufreq_set_policy(struct cpufreq_policy *data,
 				struct cpufreq_policy *policy);
 
 /**
  * cpufreq_per_cpu_attr_write() / store_##file_name() - sysfs write access
  */
+#ifdef FUCKER
 #define store_one(file_name, object)			\
 static ssize_t store_##file_name					\
 (struct cpufreq_policy *policy, const char *buf, size_t count)		\
@@ -498,7 +499,7 @@ static ssize_t store_##file_name					\
 #endif
 
 store_one(scaling_max_freq, max);
-
+#endif
 /**
  * show_cpuinfo_cur_freq - current CPU frequency as detected by hardware
  */
@@ -711,14 +712,13 @@ cpufreq_freq_attr_rw(scaling_min_freq);
 #endif
 #endif
 
-
+#ifdef FUCKER
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
 #ifdef CONFIG_MSM_CPU_VOLTAGE_CONTROL
 cpufreq_freq_attr_rw(UV_mV_table);
 #endif
-
 static struct attribute *default_attrs[] = {
 	&cpuinfo_min_freq.attr,
 	&cpuinfo_max_freq.attr,
@@ -738,9 +738,10 @@ static struct attribute *default_attrs[] = {
 #ifdef CONFIG_MSM_CPU_VOLTAGE_CONTROL
 	&UV_mV_table.attr,
 #endif
+
 	NULL
 };
-
+#endif
 struct kobject *cpufreq_global_kobject;
 EXPORT_SYMBOL(cpufreq_global_kobject);
 
@@ -807,13 +808,13 @@ static const struct sysfs_ops sysfs_ops = {
 	.show	= show,
 	.store	= store,
 };
-
+#ifdef FUCKER
 static struct kobj_type ktype_cpufreq = {
 	.sysfs_ops	= &sysfs_ops,
 	.default_attrs	= default_attrs,
 	.release	= cpufreq_sysfs_release,
 };
-
+#endif
 /*
  * Returns:
  *   Negative: Failure
@@ -935,7 +936,7 @@ static int cpufreq_add_dev_symlink(unsigned int cpu,
 	}
 	return ret;
 }
-
+#ifdef FUCKER
 static int cpufreq_add_dev_interface(unsigned int cpu,
 				     struct cpufreq_policy *policy,
 				     struct device *dev)
@@ -1021,7 +1022,7 @@ err_out_kobj_put:
 	return ret;
 }
 
-
+#endif
 /**
  * cpufreq_add_dev - add a CPU device
  *
